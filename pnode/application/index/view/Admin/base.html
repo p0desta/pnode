@@ -1,0 +1,91 @@
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{block name="title"}pnode{/block}</title>
+    <script type="text/javascript" src="/public/static/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/public/static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/static/css/bootstrap.css">
+    <link rel="shortcut icon" href="/public/static/image/avatar.jpeg">
+</head>
+
+<body class="container">
+    <!-- 菜单导航 -->
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand active" href="">Pnode</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="list-menu dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    面板管理
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{:url('Admin/admin')}">查看面版</a></li>
+                                    <li><a href="{:url('Admin/del')}">清空面板</a></li>
+                                </ul>
+                            </li>
+                           
+                            <li class="list-menu dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        DNS管理
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{:url('Dns/index')}">查看DNSlog</a></li>
+                                        <li><a href="{:url('Dns/del')}">清空DNSlog</a></li>
+                                    </ul>
+                            </li>
+                            <li class="list-menu dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        文件管理
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{:url('File/jsManage')}">JS文件管理</a></li>
+                                        <li><a href="{:url('File/otherManage')}">其他文件管理</a></li>
+                                    </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                                <li><a href="{:url('Admin/help')}">about&payload</a></li>
+                            </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="{:url('Admin/logout')}">注销</a></li>
+                        </ul>
+
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container-fluid -->
+            </nav>
+        </div>
+    </div>
+    <!-- /菜单导航 -->
+<script>
+    $(function(){
+        $('li.list-menu').click(function(){
+            $(this).addClass("active");
+            $(this).siblings().removeClass("active");
+            if($(this).hasClass("dropdown")){
+                setTimeout(function(){
+                    $(this).addClass("open"); 
+                },10);            }
+        });
+    });
+</script>
+{block name="body"}
+{/block}
+<footer class="footer navbar-fixed-bottom ">
+        <div class="container" style="text-align:center" >
+            <a href="http://www.p0desta.com">powered by p0desta</a>
+        </div>
+</footer>
+</body>
+</html>

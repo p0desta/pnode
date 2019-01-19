@@ -1,0 +1,180 @@
+{extend name="Admin/base" /}
+{block name="title"}{/block}
+{block name="body"}
+<div class="container">
+    <style>
+            #list a {
+                display: inline-block;
+                width: 24%;
+            }
+            div #post,
+            #cookie,
+            #header {
+                display: none;
+            }
+
+            #p p {
+                min-height: 100px;
+                min-width: 300px;
+                max-width: 900px;
+                border: 1px solid #ccc;
+            }
+
+            p {
+                word-wrap: break-word;
+            }
+
+            #td1 {
+                max-width: 400px;
+            }
+    </style>
+    <div class="row">
+        <!-- 右侧 -->
+        <div class="co-xs-12 col-sm-10 col-md-10 col-lg-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <th>时间</th>
+                            <th>IP</th>
+                            <th>来源</th>
+                            <th>请求</th>
+                            <th>携带数据</th>
+                            <th>详情</th>
+                        </tr>
+                        {assign name="id" value="0"}
+                        {neq name="info_list|empty" value="true"}
+                        {foreach $info_list as $vo}
+                        <tr>
+                            <td><span class="label label-default">{$vo.request_time|date="Y-m-d H:i:s",###}</span></td>
+                            <td><a>{$vo.user_ip}</a></td>
+                            <td><a>{$vo.area}</a></td>
+                            <td><a>{$vo.request_method}</a></td>
+                            <td><a>
+                                {switch $vo.request_method}
+                                    {case value="GET"}{$vo.get_data|array_keys|implode=",",###}{/case}
+                                    {case value="POST"}{$vo.post_data|array_keys|implode=",",###}{/case}
+                                    {default /}{$vo.cookie_data|array_keys|implode=",",###}
+                                {/switch}
+                            </a></td>
+                            <td>
+                                <a href="#collapse{++$id}" class="detail-link" data-toggle="collapse" data-parent="#accordion">
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr id="collapse{$id}" class="collapse">
+                                <td colspan="10">
+                                    <div class="list-group" id="list">
+                                        <a href="javascript:void(0)" class="list-group-item active  g_" id="g_">GET</a>
+                                        <a href="javascript:void(0)" class="list-group-item p_" id="p_">POST</a>
+                                        <a href="javascript:void(0)" class="list-group-item c_" id="c_">COOKIE</a>
+                                        <a href="javascript:void(0)" class="list-group-item h_" id="h_">HEADER</a>
+                                    </div>
+                                    <div id="p">
+                                        <p id="get" class="get">
+                                            <table class="table table-hover">
+                                                    <tr>
+                                                        <th>键</th>
+                                                        <th>值</th>
+                                                    </tr>
+                                                    {neq name="vo.get_data|count" value="0"}
+                                                        {foreach $vo.get_data as $key=>$value}
+                                                        <tr>
+                                                            <td>{$key}</td>
+                                                            <td id="td1">{$value}</td>
+                                                        </tr>
+                                                        {/foreach}
+                                                    {/neq}
+                                            </table>
+                                        </p>
+                                        <p id="post" class="post">
+                                                <table class="table table-hover">
+                                                        <tr>
+                                                            <th>键</th>
+                                                            <th>值</th>
+                                                        </tr>
+                                                        {neq name="vo.post_data|count" value="0"}
+                                                        {foreach $vo.post_data as $key=>$value}
+                                                        <tr>
+                                                            <td>{$key}</td>
+                                                            <td id="td1">{$value}</td>
+                                                        </tr>
+                                                        {/foreach}
+                                                        {/neq}
+                                                </table>
+                                        </p>
+                                        <p id="cookie" class="cookie">
+                                                <table class="table table-hover">
+                                                        <tr>
+                                                            <th>键</th>
+                                                            <th>值</th>
+                                                        </tr>
+                                                        {neq name="vo.cookie_data|count" value="0"}
+                                                        {foreach $vo.cookie_data as $key=>$value}
+                                                        <tr>
+                                                            <td>{$key}</td>
+                                                            <td id="td1">{$value}</td>
+                                                        </tr>
+                                                        {/foreach}
+                                                        {/neq}
+                                                </table>
+                                        </p>
+                                        <p id="header" class="header">
+                                                <table class="table table-hover">
+                                                        <tr>
+                                                            <th>键</th>
+                                                            <th>值</th>
+                                                        </tr>
+                                                        {neq name="vo.headers_data|count" value="0"}
+                                                        {foreach $vo.headers_data as $key=>$value}
+                                                        <tr>
+                                                            <td>{$key}</td>
+                                                            <td id="td1">{$value}</td>
+                                                        </tr>
+                                                        {/foreach}
+                                                        {/neq}
+    
+                                                </table>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {/foreach}
+                        
+                    </table>
+                    <!--小屏后在下面显示翻页-->
+                    <div class="pagination">
+                        {$plistpage}
+                    </div>
+                    {/neq}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        $(function () {
+            $('#list a').click(function () {
+                $(this).parent().next().find("p").css("display", "none").removeClass("active");
+
+                $(this).parent().find("a").removeClass("active");
+                $(this).addClass("active");
+            });
+
+            $('.g_').click(function () {
+                $(this).parent().next().find(".get").css("display", "block");
+            });
+            $('.p_').click(function () {
+                $(this).parent().next().find(".post").css("display", "block");
+            });
+            $('.c_').click(function () {
+                $(this).parent().next().find(".cookie").css("display", "block");
+            });
+            $('.h_').click(function () {
+                $(this).parent().next().find(".header").css("display", "block");
+            });
+
+        })
+</script>
+{/block}

@@ -1,0 +1,128 @@
+{extend name="Admin/base" /}
+{block name="title"}{/block}
+{block name="body"}
+<style>
+        #daohang .list-group{
+            height:450px;
+            overflow: hidden;
+            overflow-y: visible;
+        }
+        #editor {
+        position: relative;
+        width: 560px;
+        height: 550px;
+        }
+</style>
+<script src="/public/static/js/js_encode.min.js"></script>
+<div class="container">
+    <div class="row">
+        <!-- 左侧 -->
+        <div class="co-xs-12 col-sm-2 col-md-2 col-lg-2" id="daohang">
+            <div class="list-group">
+                {foreach $list_other as $vo}
+                <a href="#"  class="list-group-item filename">{$vo.filename}</a>
+                {/foreach}
+            </div>
+            <a href="#" class="btn btn-info btn-lg addfile">增加文件</a>
+        </div>
+        <!-- 中间 -->
+        <div class="co-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div id="editor"></div>
+        </div>
+
+        <!-- 右侧 -->
+        <div class="co-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <div class="form-group">
+                    <label>文件名</label>
+                        <input type="text" class="form-control" id="file_name" placeholder="shell.php"></input>
+                </div>
+                <div class="form-group">
+                    <label>描述</label>
+                    <textarea class="form-control" rows="2" id="description"></textarea>
+                </div>
+                <div>
+                    <label>payload</label>
+                    <textarea class="form-control payload" rows="2" id="Ww_B_0_textarea"></textarea>
+                </div>
+                <input type="submit" class="btn btn-default" onclick="submitbody();" value="文件保存"></input>
+                <button type="button" class="btn btn-danger" onclick="delFile();">文件删除</button>
+                <button type="button" class="btn btn-info" onclick="apiShortUrl();">URL短链接</button>
+        </div>
+        </div>
+</div>
+<script>
+    $(function(){
+        $('.list-group-item').click(function(){
+            $(this).addClass("active");
+            $(this).siblings().removeClass("active");
+        });
+    });
+    function submitbody(){
+        var code = editor.getValue();
+        var filename = $("#file_name").val();
+        var description = $("#description").val();
+        if(code.length==0 || filename.length==0 || description.length==0)
+        {
+            alert("代码、名字、描述都为必填项");
+            return;
+        }
+        $.post("{:url('File/saveFile')}", {"code": code, "filename": filename, "description": description},function(result){
+            if(result){
+                alert(result);
+                window.location.reload();
+            }
+                
+        });
+    }
+    function delFile(){
+        var filename = $("#file_name").val();
+        if(filename.length == 0){
+            return;
+        }else{
+            $.post("{:url('File/delFile')}", {"filename": filename}, function(result){
+                if(result){
+                    alert(result);
+                    window.location.reload();
+                }
+                    
+            });
+        }
+    }
+    function apiShortUrl(){
+        var payload = $(".payload").html();
+        console.log(payload);
+        $.post("{:url('File/shortUrl')}", {"payload": payload}, function(result){
+            if(result)
+                $(".payload").html(result);
+        })
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+        var editor = ace.edit("editor");
+        //editor.setTheme("ace/theme/god");
+        editor.getSession().setMode("ace/mode/php");
+</script>
+<script>
+    $(".filename").click(function(){
+        var filename = $(this).html();
+        var payload = document.location.protocol + "//" + document.location.host + "/public/uploads/other/" + filename ;
+        $(".payload").html(payload);
+        $.post("{:url('File/getFileInfo')}", {"filename": filename}, function(js_info){
+            var code = js_info['code'];
+            var description = js_info['description'];
+            editor.setValue(code);
+            $("#file_name").attr("value", filename);
+            $("#description").html(description);
+        });
+
+    });
+    $(".addfile").click(function(){
+        editor.setValue("");
+        $("#file_name").attr("value", "");
+        $("#description").html("");
+        $("#Ww_B_0_textarea").html("");
+    });
+</script>
+{/block}

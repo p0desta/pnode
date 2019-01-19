@@ -1,0 +1,63 @@
+{extend name="Admin/base" /}
+{block name="title"}{/block}
+{block name="body"}
+<div class="container">
+    <style>
+            #list a {
+                display: inline-block;
+                width: 24%;
+            }
+            div #post,
+            #cookie,
+            #header {
+                display: none;
+            }
+
+            #p p {
+                min-height: 100px;
+                min-width: 300px;
+                max-width: 900px;
+                border: 1px solid #ccc;
+            }
+
+            p {
+                word-wrap: break-word;
+            }
+
+            #td1 {
+                max-width: 400px;
+            }
+    </style>
+    <div class="row">
+        <!-- 右侧 -->
+        <div class="co-xs-12 col-sm-10 col-md-10 col-lg-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <th>时间</th>
+                            <th>log</th>
+                        </tr>
+                    {neq name="dnslogs|empty" value="true"}
+                        {assign name="id" value="0"}
+                        {foreach $dnslogs as $key=>$value}
+                        <tr>
+                            <td><span class="label label-default">{$key}</span></td>
+                            <td><a>{$value}</a></td>
+                        </tr>
+                        {/foreach}
+                    </table>
+                    <!--小屏后在下面显示翻页-->
+                    <div class="pagination">
+                        {$plistpage}
+                    </div>
+                {/neq}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <p style="text-align:center"></p>
+</footer>
+{/block}
