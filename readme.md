@@ -81,7 +81,7 @@ update users set password=md5('admin') where username='admin'
 修改dns.py为你的域名和你的vps ip,然后手动启动dns服务
 
 ```
-python /tmp/dns.py &
+nohup python /tmp/dns.py &
 ```
 
 在一个小时左右将会解析成功,然后就可以接受到log。
