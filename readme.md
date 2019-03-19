@@ -32,6 +32,7 @@ Pnode
 
 * HTTP log
 * DNS log
+* DNS rebinding
 * XSS攻击管理模块
 * WebShell等文件管理模块
 
