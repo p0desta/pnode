@@ -1,10 +1,3 @@
-'''
-@Description: 
-@Author: p0desta
-@Date: 2019-07-13 15:53:14
-@LastEditors: p0desta
-@LastEditTime: 2019-07-13 15:53:14
-'''
 #coding=utf-8
 import MySQLdb
 from twisted.internet import reactor, defer
