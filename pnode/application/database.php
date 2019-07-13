@@ -1,4 +1,11 @@
 <?php
+/*
+ * @Description: 
+ * @Author: p0desta
+ * @Date: 2019-07-13 14:31:47
+ * @LastEditors: p0desta
+ * @LastEditTime: 2019-07-13 14:31:47
+ */
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -19,7 +26,7 @@ return [
     // 用户名
     'username'       => 'root',
     // 密码
-    'password'       => 'root',
+    'password'       => '6df2dbfdaa94a9b357a8eeb0d7fddae5',
     // 端口
     'hostport'       => '3306',
     // 连接dsn

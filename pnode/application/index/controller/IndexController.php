@@ -1,4 +1,11 @@
 <?php
+/*
+ * @Description: 
+ * @Author: p0desta
+ * @Date: 2019-07-13 14:36:43
+ * @LastEditors: p0desta
+ * @LastEditTime: 2019-07-13 14:36:43
+ */
 namespace app\index\controller;
 
 use think\request;
@@ -34,6 +41,7 @@ class IndexController
         $info['request_uri']    = getInfo::stripStr($request_URI);
         $info['request_time']   = getInfo::stripStr($request_time);
         $info['headers_data']   = getInfo::stripArr($headers_data);
+        $info['area'] = GetInfo::getArea($info['user_ip']);
 
         $info['get_data'] = getInfo::stripArr($get_data);
         if ($decoded_get_data)

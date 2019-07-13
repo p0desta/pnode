@@ -1,4 +1,11 @@
 <?php
+/*
+ * @Description: 
+ * @Author: p0desta
+ * @Date: 2019-07-13 14:36:05
+ * @LastEditors: p0desta
+ * @LastEditTime: 2019-07-13 14:36:06
+ */
 namespace app\index\controller;
 
 use think\Controller;
@@ -47,7 +54,6 @@ class AdminController extends Controller
         $info_list = array();
         foreach($infos as $info){
             $tmp = json_decode($info,true);
-            $tmp['area'] = GetInfo::getArea($tmp['user_ip']);
             $info_list[] = $tmp;
         }
         $paginate_diy = new PaginateDiy();

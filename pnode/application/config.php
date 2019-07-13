@@ -1,4 +1,11 @@
 <?php
+/*
+ * @Description: 
+ * @Author: p0desta
+ * @Date: 2019-07-13 14:31:30
+ * @LastEditors: p0desta
+ * @LastEditTime: 2019-07-13 14:31:30
+ */
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -17,7 +24,7 @@ return [
     // 应用命名空间
     'app_namespace'          => 'app',
     // 应用调试模式
-    'app_debug'              => false,
+    'app_debug'              => true,
     // 应用Trace
     'app_trace'              => false,
     // 应用模式状态
