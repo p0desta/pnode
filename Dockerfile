@@ -43,4 +43,5 @@ RUN rm /var/www/html/index.html \
     && chmod a+x /start.sh
 
 EXPOSE 80
+EXPOSE 53
 CMD ["/start.sh"]
